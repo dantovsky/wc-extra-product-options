@@ -19,13 +19,15 @@
 	padding: 0 0.35em;
 }
 
-.woo-extra-options-multiple {
+.woo-extra-options-multiple,
+.woo-extra-options-radio {
 	list-style: none !important;
 	margin: 0.5em 0 0;
 	padding: 0;
 }
 
-.woo-extra-options-multiple li {
+.woo-extra-options-multiple li,
+.woo-extra-options-radio li {
 	margin: 0.35em 0;
 }
 

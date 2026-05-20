@@ -1,9 +1,9 @@
 <?php
 /**
  * Plugin Name: Woo Extra Product Opitons
- * Description: Opções extra para produtos do WooCommerce com regras por produto/categoria/tag, preço dinâmico e integração com carrinho e encomendas.
+ * Description: Opções extra para produtos do WooCommerce com preço e regras de exibição com base em produto, categoria ou tag.
  * Version: 1.1.1
- * Author: deinglass
+ * Author: Dante Marinho
  * Text Domain: woo-extra
  * Domain Path: /languages
  * Requires at least: 6.5
@@ -68,6 +68,23 @@ function woo_extra_bootstrap() {
 	Woo_Extra_Cart::init();
 }
 add_action( 'plugins_loaded', 'woo_extra_bootstrap', 11 );
+
+/**
+ * Ligação "Configurações" na listagem de plugins.
+ *
+ * @param string[] $links Ligações existentes.
+ * @return string[]
+ */
+function woo_extra_plugin_action_links( $links ) {
+	$url = admin_url( 'admin.php?page=woo-extra-settings' );
+	$links = (array) $links;
+	array_unshift(
+		$links,
+		'<a href="' . esc_url( $url ) . '">' . esc_html__( 'Configurações', 'woo-extra' ) . '</a>'
+	);
+	return $links;
+}
+add_filter( 'plugin_action_links_' . plugin_basename( WOO_EXTRA_FILE ), 'woo_extra_plugin_action_links' );
 
 add_action(
 	'before_woocommerce_init',

@@ -75,7 +75,7 @@ class Woo_Extra_Core {
 			}
 
 			$choice_type = isset( $set['choice_type'] ) ? sanitize_key( $set['choice_type'] ) : 'exclusive';
-			if ( ! in_array( $choice_type, array( 'exclusive', 'multiple' ), true ) ) {
+			if ( ! in_array( $choice_type, array( 'exclusive', 'exclusive_radio', 'multiple' ), true ) ) {
 				$choice_type = 'exclusive';
 			}
 

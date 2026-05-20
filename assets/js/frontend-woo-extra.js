@@ -33,6 +33,8 @@
 			if ($el.is('select')) {
 				var $o = $el.find('option:selected');
 				total += parseFloat($o.data('add')) || 0;
+			} else if ($el.is(':radio') && $el.is(':checked')) {
+				total += parseFloat($el.data('add')) || 0;
 			} else if ($el.is(':checkbox') && $el.is(':checked')) {
 				total += parseFloat($el.data('add')) || 0;
 			}
@@ -94,6 +96,13 @@
 		$('.woo-extra-fields-wrap fieldset[data-required="1"]').each(function () {
 			var $fs = $(this);
 			if ($fs.find('select.woo-extra-input').length) {
+				return;
+			}
+			if ($fs.find('input.woo-extra-input[type="radio"]').length) {
+				if (!$fs.find('input.woo-extra-input[type="radio"]:checked').length) {
+					ok = false;
+					return false;
+				}
 				return;
 			}
 			if (!$fs.find('.woo-extra-input:checkbox:checked').length) {

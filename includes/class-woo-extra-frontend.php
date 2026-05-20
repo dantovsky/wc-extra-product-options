@@ -148,6 +148,19 @@ class Woo_Extra_Frontend {
 					echo '</label></li>';
 				}
 				echo '</ul>';
+			} elseif ( 'exclusive_radio' === $type ) {
+				$req_attrs = $req ? ' required aria-required="true"' : '';
+				echo '<ul class="woo-extra-options woo-extra-options-radio">';
+				foreach ( $set['options'] as $idx => $opt ) {
+					$lid = 'woo-extra-' . $sid . '-' . $idx;
+					echo '<li><label for="' . esc_attr( $lid ) . '">';
+					echo '<input type="radio" id="' . esc_attr( $lid ) . '" name="' . esc_attr( $fname ) . '" value="' . esc_attr( (string) $idx ) . '" class="woo-extra-input" data-add="' . esc_attr( wc_format_decimal( $opt['price'] ) ) . '"' . $req_attrs . ' /> ';
+					echo esc_html( $opt['label'] );
+					echo ' <span class="woo-extra-option-suffix">(+' . wp_kses_post( wc_price( $opt['price'] ) ) . ')</span>';
+					echo '</label></li>';
+					$req_attrs = '';
+				}
+				echo '</ul>';
 			} else {
 				$req_attrs = $req ? ' required aria-required="true"' : '';
 				echo '<select name="' . esc_attr( $fname ) . '" class="woo-extra-input woo-extra-select" data-exclusive="1"' . $req_attrs . '>';

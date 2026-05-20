@@ -283,7 +283,8 @@ class Woo_Extra_Admin {
 						<th><?php esc_html_e( 'Tipo de escolha', 'woo-extra' ); ?></th>
 						<td>
 							<select name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][choice_type]">
-								<option value="exclusive" <?php selected( $choice, 'exclusive' ); ?>><?php esc_html_e( 'Exclusiva (select / radio)', 'woo-extra' ); ?></option>
+								<option value="exclusive" <?php selected( $choice, 'exclusive' ); ?>><?php esc_html_e( 'Exclusiva (select)', 'woo-extra' ); ?></option>
+								<option value="exclusive_radio" <?php selected( $choice, 'exclusive_radio' ); ?>><?php esc_html_e( 'Exclusiva (radio)', 'woo-extra' ); ?></option>
 								<option value="multiple" <?php selected( $choice, 'multiple' ); ?>><?php esc_html_e( 'Múltipla (checkbox)', 'woo-extra' ); ?></option>
 							</select>
 						</td>
