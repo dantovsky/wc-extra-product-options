@@ -45,8 +45,12 @@
 	var baseSimple = parseFloat(wooExtraFront.basePrice) || 0;
 	var variationBase = null;
 
-	/** Localiza o elemento do preço: temas clássicos vs FSE / blocos WooCommerce. */
-	function findProductPriceEl() {
+	function isVariableProduct() {
+		return $('form.variations_form').length > 0;
+	}
+
+	/** Preço principal (produto simples). Não usar em variáveis — o range do topo deve permanecer. */
+	function findSimpleProductPriceEl() {
 		var selectors = [
 			'.product .entry-summary .price',
 			'.product .summary .price',
@@ -69,6 +73,29 @@
 		return $();
 	}
 
+	/** Preço da variação selecionada (container nativo WooCommerce). */
+	function findVariationPriceEl() {
+		var selectors = [
+			'.woocommerce-variation-price .price',
+			'.single_variation_wrap .woocommerce-variation-price .price'
+		];
+		var i;
+		for (i = 0; i < selectors.length; i++) {
+			var $c = $(selectors[i]).first();
+			if ($c.length) {
+				return $c;
+			}
+		}
+		return $();
+	}
+
+	function findProductPriceEl() {
+		if (isVariableProduct()) {
+			return findVariationPriceEl();
+		}
+		return findSimpleProductPriceEl();
+	}
+
 	function updatePrice() {
 		var $wrap = $('.woo-extra-fields-wrap');
 		if (!$wrap.length) {
@@ -78,7 +105,7 @@
 		if (!$price.length) {
 			return;
 		}
-		if (wooExtraFront.isVariable && variationBase === null) {
+		if (isVariableProduct() && variationBase === null) {
 			return;
 		}
 		var b = variationBase !== null ? variationBase : baseSimple;
