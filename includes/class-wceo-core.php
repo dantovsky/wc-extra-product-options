@@ -12,7 +12,7 @@ defined( 'ABSPATH' ) || exit;
 if ( ! class_exists( 'WCEO_Core' ) ) {
 	class WCEO_Core {
 
-	const OPTION_KEY = 'woo_extra_config';
+	const OPTION_KEY = 'wc_extra_product_options_config';
 
 	/**
 	 * @var array|null
@@ -55,7 +55,7 @@ if ( ! class_exists( 'WCEO_Core' ) ) {
 	}
 
 	/**
-	 * @param array $raw Dados já em array (ex.: $_POST['woo_extra_config'] sanitizado).
+	 * @param array $raw Dados já em array (ex.: $_POST['wc_extra_product_options_config'] sanitizado).
 	 */
 	public static function sanitize_config( $raw ) {
 		$out = array(

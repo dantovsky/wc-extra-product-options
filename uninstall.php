@@ -10,4 +10,4 @@ defined( 'WP_UNINSTALL_PLUGIN' ) || exit;
 /**
  * Remove plugin configuration option from database.
  */
-delete_option( 'woo_extra_config' );
+delete_option( 'wc_extra_product_options_config' );

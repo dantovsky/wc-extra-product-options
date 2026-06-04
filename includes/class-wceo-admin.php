@@ -103,7 +103,7 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 			return;
 		}
 
-		$raw = isset( $_POST['woo_extra_config'] ) ? wp_unslash( $_POST['woo_extra_config'] ) : array();
+		$raw = isset( $_POST['wc_extra_product_options_config'] ) ? wp_unslash( $_POST['wc_extra_product_options_config'] ) : array();
 		$raw = is_array( $raw ) ? $raw : array();
 
 		$config = WCEO_Core::sanitize_config( $raw );
@@ -155,14 +155,14 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 						<tr>
 							<th scope="row"><label for="woo_extra_global_label"><?php esc_html_e( 'Texto da etiqueta', 'wc-extra-product-options' ); ?></label></th>
 							<td>
-								<input type="text" class="regular-text" id="woo_extra_global_label" name="woo_extra_config[global_label]" value="<?php echo esc_attr( $config['global_label'] ); ?>" />
+								<input type="text" class="regular-text" id="woo_extra_global_label" name="wc_extra_product_options_config[global_label]" value="<?php echo esc_attr( $config['global_label'] ); ?>" />
 							</td>
 						</tr>
 						<tr>
 							<th scope="row"><?php esc_html_e( 'Mostrar etiqueta', 'wc-extra-product-options' ); ?></th>
 							<td>
 								<label>
-									<input type="checkbox" name="woo_extra_config[show_global_label]" value="1" <?php checked( ! empty( $config['show_global_label'] ) ); ?> />
+									<input type="checkbox" name="wc_extra_product_options_config[show_global_label]" value="1" <?php checked( ! empty( $config['show_global_label'] ) ); ?> />
 											<?php esc_html_e( 'Exibir a etiqueta global acima dos extras na página do produto', 'wc-extra-product-options' ); ?>
 								</label>
 							</td>
@@ -257,14 +257,14 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 				</span>
 				<span class="woo-extra-set-header-meta">
 					<label class="woo-extra-set-meta-label">
-						<input type="hidden" name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][required]" value="0" />
-						<input type="checkbox" name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][required]" value="1" <?php checked( $required ); ?> class="woo-extra-set-required-cb" />
+						<input type="hidden" name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][required]" value="0" />
+						<input type="checkbox" name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][required]" value="1" <?php checked( $required ); ?> class="woo-extra-set-required-cb" />
 						<?php esc_html_e( 'Obrigatório', 'wc-extra-product-options' ); ?>
 					</label>
 					<span class="woo-extra-set-enabled-wrap">
-						<input type="hidden" name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][enabled]" value="0" />
+						<input type="hidden" name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][enabled]" value="0" />
 						<label class="woo-extra-set-enabled-toggle">
-							<input type="checkbox" name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][enabled]" value="1" <?php checked( $enabled ); ?> class="woo-extra-set-enabled-cb screen-reader-text" />
+							<input type="checkbox" name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][enabled]" value="1" <?php checked( $enabled ); ?> class="woo-extra-set-enabled-cb screen-reader-text" />
 							<span class="woo-extra-set-enabled-track" aria-hidden="true">
 								<span class="woo-extra-set-enabled-thumb"></span>
 							</span>
@@ -275,17 +275,17 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 			</div>
 			<div class="woo-extra-set-panel" <?php echo $start_collapsed ? ' hidden' : ''; ?>>
 			<div class="inside">
-				<input type="hidden" name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][id]" value="<?php echo esc_attr( $set_id ); ?>" />
+				<input type="hidden" name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][id]" value="<?php echo esc_attr( $set_id ); ?>" />
 
 				<table class="form-table woo-extra-set-meta">
 					<tr>
 						<th><label><?php esc_html_e( 'Nome do conjunto', 'wc-extra-product-options' ); ?></label></th>
-						<td><input type="text" class="regular-text woo-extra-set-name-input" name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][name]" value="<?php echo esc_attr( $name ); ?>" placeholder="<?php esc_attr_e( 'Ex.: Acabamentos', 'wc-extra-product-options' ); ?>" autocomplete="off" /></td>
+						<td><input type="text" class="regular-text woo-extra-set-name-input" name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][name]" value="<?php echo esc_attr( $name ); ?>" placeholder="<?php esc_attr_e( 'Ex.: Acabamentos', 'wc-extra-product-options' ); ?>" autocomplete="off" /></td>
 					</tr>
 					<tr>
 						<th><?php esc_html_e( 'Tipo de escolha', 'wc-extra-product-options' ); ?></th>
 						<td>
-							<select name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][choice_type]">
+							<select name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][choice_type]">
 								<option value="exclusive" <?php selected( $choice, 'exclusive' ); ?>><?php esc_html_e( 'Exclusiva (select)', 'wc-extra-product-options' ); ?></option>
 								<option value="exclusive_radio" <?php selected( $choice, 'exclusive_radio' ); ?>><?php esc_html_e( 'Exclusiva (radio)', 'wc-extra-product-options' ); ?></option>
 								<option value="multiple" <?php selected( $choice, 'multiple' ); ?>><?php esc_html_e( 'Múltipla (checkbox)', 'wc-extra-product-options' ); ?></option>
@@ -295,8 +295,8 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 					<tr>
 						<th><?php esc_html_e( 'Classe e ID (CSS)', 'wc-extra-product-options' ); ?></th>
 						<td>
-							<input type="text" class="regular-text" name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][css_class]" value="<?php echo esc_attr( $css_class ); ?>" placeholder="class" />
-							<input type="text" class="regular-text" name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][css_id]" value="<?php echo esc_attr( $css_id ); ?>" placeholder="id" />
+							<input type="text" class="regular-text" name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][css_class]" value="<?php echo esc_attr( $css_class ); ?>" placeholder="class" />
+							<input type="text" class="regular-text" name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][css_id]" value="<?php echo esc_attr( $css_id ); ?>" placeholder="id" />
 						</td>
 					</tr>
 				</table>
@@ -370,10 +370,10 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 		?>
 		<tr class="woo-extra-option-row">
 			<td class="woo-extra-col-label">
-				<input type="text" class="woo-extra-option-label" name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][options][<?php echo esc_attr( $i ); ?>][label]" value="<?php echo esc_attr( $label ); ?>" />
+				<input type="text" class="woo-extra-option-label" name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][options][<?php echo esc_attr( $i ); ?>][label]" value="<?php echo esc_attr( $label ); ?>" />
 			</td>
 			<td class="woo-extra-col-price">
-				<input type="text" class="small-text wc_input_price" name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][options][<?php echo esc_attr( $i ); ?>][price]" value="<?php echo esc_attr( $price ); ?>" />
+				<input type="text" class="small-text wc_input_price" name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][options][<?php echo esc_attr( $i ); ?>][price]" value="<?php echo esc_attr( $price ); ?>" />
 			</td>
 			<td><button type="button" class="button-link woo-extra-remove-option"><?php esc_html_e( 'Remover', 'wc-extra-product-options' ); ?></button></td>
 		</tr>
@@ -401,23 +401,23 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 			<td>
 				<?php if ( $is_first ) : ?>
 					<span class="woo-extra-rule-join-placeholder">—</span>
-					<input type="hidden" name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][rules][<?php echo esc_attr( $i ); ?>][join]" value="" class="woo-extra-rule-join-input" />
+					<input type="hidden" name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][rules][<?php echo esc_attr( $i ); ?>][join]" value="" class="woo-extra-rule-join-input" />
 				<?php else : ?>
-					<select name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][rules][<?php echo esc_attr( $i ); ?>][join]" class="woo-extra-rule-join-input">
+					<select name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][rules][<?php echo esc_attr( $i ); ?>][join]" class="woo-extra-rule-join-input">
 						<option value="AND" <?php selected( $join_value, 'AND' ); ?>>AND</option>
 						<option value="OR" <?php selected( $join_value, 'OR' ); ?>>OR</option>
 					</select>
 				<?php endif; ?>
 			</td>
 			<td>
-				<select name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][rules][<?php echo esc_attr( $i ); ?>][subject]" class="woo-extra-rule-subject">
+				<select name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][rules][<?php echo esc_attr( $i ); ?>][subject]" class="woo-extra-rule-subject">
 					<option value="product" <?php selected( $subject, 'product' ); ?>><?php esc_html_e( 'Produto', 'wc-extra-product-options' ); ?></option>
 					<option value="category" <?php selected( $subject, 'category' ); ?>><?php esc_html_e( 'Categoria', 'wc-extra-product-options' ); ?></option>
 					<option value="product_tag" <?php selected( $subject, 'product_tag' ); ?>><?php esc_html_e( 'Etiqueta (tag)', 'wc-extra-product-options' ); ?></option>
 				</select>
 			</td>
 			<td>
-				<select name="woo_extra_config[sets][<?php echo esc_attr( $set_index ); ?>][rules][<?php echo esc_attr( $i ); ?>][operator]">
+				<select name="wc_extra_product_options_config[sets][<?php echo esc_attr( $set_index ); ?>][rules][<?php echo esc_attr( $i ); ?>][operator]">
 					<option value="equals" <?php selected( $operator, 'equals' ); ?>><?php esc_html_e( 'Igual a', 'wc-extra-product-options' ); ?></option>
 					<option value="not_equals" <?php selected( $operator, 'not_equals' ); ?>><?php esc_html_e( 'Diferente de', 'wc-extra-product-options' ); ?></option>
 				</select>
@@ -439,7 +439,7 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 	 * @param array $products
 	 */
 	protected static function rule_object_select_single( $set_index, $i, $subject, $object_id, $cats, $tags, $products ) {
-		$name = 'woo_extra_config[sets][' . $set_index . '][rules][' . $i . '][object_id]';
+		$name = 'wc_extra_product_options_config[sets][' . $set_index . '][rules][' . $i . '][object_id]';
 		ob_start();
 		echo '<select name="' . esc_attr( $name ) . '" class="woo-extra-rule-object-id">';
 		echo '<option value="0">' . esc_html__( '— Escolher —', 'wc-extra-product-options' ) . '</option>';
