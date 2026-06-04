@@ -3,7 +3,7 @@ Contributors: dantiii
 Tags: woocommerce, product options, add-ons, extra options, product addons
 Requires at least: 6.5
 Tested up to: 6.8
-Stable tag: 1.1.1
+Stable tag: 1.2.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -84,7 +84,7 @@ No! Create as many options as needed per set.
 
 = 1.2.0 =
 * Changed plugin name, the slug and text domain 
-* Improve secutiry with guards on classes
+* Improve security with guards on classes
 * Improve code with best practices from WordPress.org
 * Added file: uninstall.php — delete_option
 

@@ -32,7 +32,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WCEO_VERSION', '1.1.1' );
+define( 'WCEO_VERSION', '1.2.0' );
 define( 'WCEO_FILE', __FILE__ );
 define( 'WCEO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WCEO_URL', plugin_dir_url( __FILE__ ) );
