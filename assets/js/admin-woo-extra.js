@@ -20,8 +20,9 @@
 
 	function refillObjectSelect($select, subject) {
 		var list = wooExtraAdmin.objects && wooExtraAdmin.objects[subject] ? wooExtraAdmin.objects[subject] : [];
+		var chooseText = wooExtraAdmin.chooseOption || '\u2014 Choose \u2014';
 		$select.empty();
-		$select.append($('<option></option>').attr('value', '0').text('\u2014'));
+		$select.append($('<option></option>').attr('value', '0').text(chooseText));
 		$.each(list, function (_, item) {
 			$select.append($('<option></option>').attr('value', item.id).text(item.name));
 		});
@@ -69,8 +70,8 @@
 		var on = $set.find('.woo-extra-set-enabled-cb').prop('checked');
 		$set.find('.woo-extra-set-enabled-toggle').toggleClass('is-on', !!on).toggleClass('is-off', !on);
 		var labels = wooExtraAdmin.enabledLabels;
-		var onText = labels && labels.on ? labels.on : 'Habilitado';
-		var offText = labels && labels.off ? labels.off : 'Desabilitado';
+		var onText = labels && labels.on ? labels.on : 'Enabled';
+		var offText = labels && labels.off ? labels.off : 'Disabled';
 		$set.find('.woo-extra-set-enabled-text').text(on ? onText : offText);
 	}
 
@@ -172,7 +173,7 @@
 			$(replaceSetIndex(wooExtraAdmin.optionRow, '{{SET}}', newIdx).replace(/\{\{I\}\}/g, '0'))
 		);
 		$box.find('.woo-extra-rules-body').empty();
-		var defHeading = wooExtraAdmin.defaultSetHeading || '\u2014';
+		var defHeading = wooExtraAdmin.defaultSetHeading || 'Untitled';
 		$box.find('.woo-extra-set-heading').text(defHeading).addClass('is-placeholder');
 		$sets.append($box);
 		initSetsSortable();
@@ -191,7 +192,7 @@
 	$(document).on('input', '.woo-extra-set-name-input', function () {
 		var $set = $(this).closest('.woo-extra-set');
 		var v = $(this).val().trim();
-		var def = wooExtraAdmin.defaultSetHeading || '\u2014';
+		var def = wooExtraAdmin.defaultSetHeading || 'Untitled';
 		var $h = $set.find('.woo-extra-set-heading');
 		$h.text(v || def);
 		$h.toggleClass('is-placeholder', !v);

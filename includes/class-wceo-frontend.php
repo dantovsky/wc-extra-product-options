@@ -105,7 +105,7 @@ if ( ! class_exists( 'WCEO_Frontend' ) ) {
 				'currencyPos'  => get_option( 'woocommerce_currency_pos', 'left' ),
 				'priceSuffix'  => wp_kses_post( $price_suffix ),
 				'strings'      => array(
-					'requiredMultiple' => __( 'Escolha pelo menos uma opção em cada extra obrigatório (tipo múltipla).', 'wc-extra-product-options' ),
+					'requiredMultiple' => __( 'Please select at least one option in each required extra (multiple type).', 'wc-extra-product-options' ),
 				),
 			)
 		);
@@ -187,7 +187,7 @@ if ( ! class_exists( 'WCEO_Frontend' ) ) {
 			} else {
 				$req_attrs = $req ? ' required aria-required="true"' : '';
 				echo '<select name="' . esc_attr( $fname ) . '" class="wceo-input wceo-select" data-exclusive="1"' . $req_attrs . '>';
-				echo '<option value="">' . esc_html__( '— Selecionar —', 'wc-extra-product-options' ) . '</option>';
+				echo '<option value="">' . esc_html__( '— Select —', 'wc-extra-product-options' ) . '</option>';
 				foreach ( $set['options'] as $idx => $opt ) {
 					echo '<option value="' . esc_attr( (string) $idx ) . '" data-add="' . esc_attr( wc_format_decimal( $opt['price'] ) ) . '">';
 					echo esc_html( $opt['label'] );

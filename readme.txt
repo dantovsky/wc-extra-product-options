@@ -3,7 +3,7 @@ Contributors: dantiii
 Tags: woocommerce, product options, add-ons, extra options, product addons
 Requires at least: 6.5
 Tested up to: 6.8
-Stable tag: 1.2.2
+Stable tag: 1.3.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -81,6 +81,10 @@ Extra options and their prices are displayed in the cart, checkout, and order de
 No! Create as many options as needed per set.
 
 == Changelog ==
+
+= 1.3.0 =
+* Implemented internationalization (i18n) » EN as default
+* Added translations for pt_BR
 
 = 1.2.2 =
 * Changed CART_KEY from woo_extra_selection to wceo_selection

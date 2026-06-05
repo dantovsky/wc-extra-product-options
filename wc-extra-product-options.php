@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Extra Product Options for WooCommerce
  * Description: This plugin adds extra product options to WooCommerce products with pricing and conditional display rules.
- * Version: 1.2.2
+ * Version: 1.3.0
  * Author: Dante Marinho
  * Author URI: https://profiles.wordpress.org/dantiii
  * Text Domain: wc-extra-product-options
@@ -32,10 +32,24 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WCEO_VERSION', '1.2.2' );
+define( 'WCEO_VERSION', '1.3.0' );
 define( 'WCEO_FILE', __FILE__ );
 define( 'WCEO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WCEO_URL', plugin_dir_url( __FILE__ ) );
+
+/**
+ * Load plugin text domain for translations.
+ *
+ * @return void
+ */
+function wceo_load_textdomain() {
+	load_plugin_textdomain(
+		'wc-extra-product-options',
+		false,
+		dirname( plugin_basename( WCEO_FILE ) ) . '/languages'
+	);
+}
+add_action( 'plugins_loaded', 'wceo_load_textdomain', 9 );
 
 /**
  * Bootstrap plugin after all plugins are loaded.
@@ -50,7 +64,7 @@ function wceo_bootstrap() {
 		add_action(
 			'admin_notices',
 			function () {
-				echo '<div class="notice notice-error"><p>' . esc_html__( 'Woo Extras necessita do WooCommerce ativo.', 'wc-extra-product-options' ) . '</p></div>';
+				echo '<div class="notice notice-error"><p>' . esc_html__( 'Extra Product Options requires WooCommerce to be active.', 'wc-extra-product-options' ) . '</p></div>';
 			}
 		);
 		return;
@@ -67,7 +81,7 @@ function wceo_bootstrap() {
 				echo esc_html(
 					sprintf(
 						/* translators: %s: WooCommerce version */
-						__( 'Woo Extras foi testado com WooCommerce 8.2 ou superior (recomendado para WordPress 6.9 e WooCommerce 10.6). A tua versão é %s.', 'wc-extra-product-options' ),
+						__( 'Extra Product Options was tested with WooCommerce 8.2 or higher (recommended for WordPress 6.9 and WooCommerce 10.6). Your version is %s.', 'wc-extra-product-options' ),
 						WC_VERSION
 					)
 				);
@@ -105,7 +119,7 @@ function wceo_plugin_action_links( $links ) {
 	$links = (array) $links;
 	array_unshift(
 		$links,
-		'<a href="' . esc_url( $url ) . '">' . esc_html__( 'Configurações', 'wc-extra-product-options' ) . '</a>'
+		'<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'wc-extra-product-options' ) . '</a>'
 	);
 	return $links;
 }

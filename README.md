@@ -15,3 +15,15 @@ https://www.paypal.com/paypalme/dantemarinho
 Send me a message if you need some specifc implementation for this plugin:  
 - https://www.instagram.com/marinhodante/
 - https://www.linkedin.com/in/dantemarinho/
+
+## Help Links
+
+How to Translate a WordPress Theme  
+https://wpmudev.com/blog/how-to-translate-a-wordpress-theme/
+
+WordPress internacional: como estruturar um site multilíngue (sem perder SEO)  
+https://juanmoura.com/blog/wordpress-internacional/
+
+Internacionalização de temas e plugins para WordPress  
+https://blog.apiki.com/internacionalizacao-de-temas-e-plugins-para-wordpress/
+

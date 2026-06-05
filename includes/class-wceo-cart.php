@@ -88,7 +88,7 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 				if ( ! $ok ) {
 					$label = isset( $set_def['name'] ) && $set_def['name'] !== '' ? $set_def['name'] : __( 'Extras', 'wc-extra-product-options' );
 					/* translators: %s: extra set name */
-					wc_add_notice( sprintf( __( 'Escolha pelo menos uma opção em "%s".', 'wc-extra-product-options' ), wp_strip_all_tags( $label ) ), 'error' );
+					wc_add_notice( sprintf( __( 'Please select at least one option in "%s".', 'wc-extra-product-options' ), wp_strip_all_tags( $label ) ), 'error' );
 					return false;
 				}
 			} else {
@@ -96,14 +96,14 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 				if ( '' === (string) $incoming ) {
 					$label = isset( $set_def['name'] ) && $set_def['name'] !== '' ? $set_def['name'] : __( 'Extras', 'wc-extra-product-options' );
 					/* translators: %s: extra set name */
-					wc_add_notice( sprintf( __( 'Escolha uma opção em "%s".', 'wc-extra-product-options' ), wp_strip_all_tags( $label ) ), 'error' );
+					wc_add_notice( sprintf( __( 'Please select an option in "%s".', 'wc-extra-product-options' ), wp_strip_all_tags( $label ) ), 'error' );
 					return false;
 				}
 				$i = absint( $incoming );
 				if ( ! isset( $set_def['options'][ $i ] ) ) {
 					$label = isset( $set_def['name'] ) && $set_def['name'] !== '' ? $set_def['name'] : __( 'Extras', 'wc-extra-product-options' );
 					/* translators: %s: extra set name */
-					wc_add_notice( sprintf( __( 'Escolha uma opção em "%s".', 'wc-extra-product-options' ), wp_strip_all_tags( $label ) ), 'error' );
+					wc_add_notice( sprintf( __( 'Please select an option in "%s".', 'wc-extra-product-options' ), wp_strip_all_tags( $label ) ), 'error' );
 					return false;
 				}
 			}
