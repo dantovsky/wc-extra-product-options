@@ -7,7 +7,7 @@
 (PT) Plugin de opções extra para produtos do WooCommerce com preço e regras de exibição com base em produto, categoria ou tag.
 
 Github link for this plugin project:  
-[github.com/dantovsky/woo-extra-product-options](https://github.com/dantovsky/wc-extra-product-options)
+[github.com/dantovsky/wc-extra-product-options](https://github.com/dantovsky/wc-extra-product-options)
 
 💸 I would love to receive your thanks paying me a coffe! You can contribute throungh the Paypal method:    
 https://www.paypal.com/paypalme/dantemarinho
