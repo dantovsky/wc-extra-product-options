@@ -1,12 +1,13 @@
 === Extra Product Options for WooCommerce ===
 Contributors: dantiii
-Tags: woocommerce, product options, add-ons, extra options, product addons
+Tags: woocommerce, product options, add-ons, product addons
 Requires at least: 6.5
 Tested up to: 7.0
 Stable tag: 1.3.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
+Donate link: https://www.paypal.com/paypalme/dantemarinho
 
 Add customizable extra product options to WooCommerce with pricing and display rules based on product, category, or tag.
 
