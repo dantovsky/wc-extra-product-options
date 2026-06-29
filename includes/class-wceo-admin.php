@@ -138,6 +138,7 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 			return;
 		}
 
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized -- Nested array sanitized in WCEO_Core::sanitize_config().
 		$raw = isset( $_POST['wc_extra_product_options_config'] ) ? wp_unslash( $_POST['wc_extra_product_options_config'] ) : array();
 		$raw = is_array( $raw ) ? $raw : array();
 
@@ -406,7 +407,7 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 					<tbody class="woo-extra-rules-body">
 						<?php
 						foreach ( $rules as $ri => $rule ) {
-							echo self::get_rule_row_markup(
+							$rule_row_markup = self::get_rule_row_markup(
 								$set_index,
 								(string) $ri,
 								0 === (int) $ri,
@@ -417,7 +418,8 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 								$cats,
 								$tags,
 								$products_for_select
-							); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							);
+							echo $rule_row_markup; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Markup built with escaping in get_rule_row_markup().
 						}
 						?>
 					</tbody>

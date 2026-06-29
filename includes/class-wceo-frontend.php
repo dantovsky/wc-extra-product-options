@@ -148,11 +148,16 @@ if ( ! class_exists( 'WCEO_Frontend' ) ) {
 			$sid = isset( $set['id'] ) ? $set['id'] : '';
 
 			$classes = trim( 'wceo-set wceo-set-' . sanitize_html_class( $sid, 'set' ) . ' ' . $cc );
-			$attr_id = $cid !== '' ? ' id="' . esc_attr( $cid ) . '"' : '';
 			$req     = ! empty( $set['required'] );
-			$dreq    = $req ? ' data-required="1"' : '';
 
-			echo '<fieldset class="' . esc_attr( $classes ) . '"' . $attr_id . $dreq . '>';
+			echo '<fieldset class="' . esc_attr( $classes ) . '"';
+			if ( '' !== $cid ) {
+				echo ' id="' . esc_attr( $cid ) . '"';
+			}
+			if ( $req ) {
+				echo ' data-required="1"';
+			}
+			echo '>';
 			if ( ! empty( $set['name'] ) ) {
 				echo '<legend class="wceo-set-legend">' . esc_html( $set['name'] ) . '</legend>';
 			}
@@ -172,26 +177,33 @@ if ( ! class_exists( 'WCEO_Frontend' ) ) {
 				}
 				echo '</ul>';
 			} elseif ( 'exclusive_radio' === $type ) {
-				$req_attrs = $req ? ' required aria-required="true"' : '';
 				echo '<ul class="wceo-options wceo-options-radio">';
+				$first_radio = true;
 				foreach ( $set['options'] as $idx => $opt ) {
 					$lid = 'wceo-' . $sid . '-' . $idx;
 					echo '<li><label for="' . esc_attr( $lid ) . '">';
-					echo '<input type="radio" id="' . esc_attr( $lid ) . '" name="' . esc_attr( $fname ) . '" value="' . esc_attr( (string) $idx ) . '" class="wceo-input" data-add="' . esc_attr( wc_format_decimal( $opt['price'] ) ) . '"' . $req_attrs . ' /> ';
+					echo '<input type="radio" id="' . esc_attr( $lid ) . '" name="' . esc_attr( $fname ) . '" value="' . esc_attr( (string) $idx ) . '" class="wceo-input" data-add="' . esc_attr( wc_format_decimal( $opt['price'] ) ) . '"';
+					if ( $req && $first_radio ) {
+						echo ' required aria-required="true"';
+						$first_radio = false;
+					}
+					echo ' /> ';
 					echo esc_html( $opt['label'] );
 					echo ' <span class="wceo-option-suffix">(+' . wp_kses_post( wc_price( $opt['price'] ) ) . ')</span>';
 					echo '</label></li>';
-					$req_attrs = '';
 				}
 				echo '</ul>';
 			} else {
-				$req_attrs = $req ? ' required aria-required="true"' : '';
-				echo '<select name="' . esc_attr( $fname ) . '" class="wceo-input wceo-select" data-exclusive="1"' . $req_attrs . '>';
+				echo '<select name="' . esc_attr( $fname ) . '" class="wceo-input wceo-select" data-exclusive="1"';
+				if ( $req ) {
+					echo ' required aria-required="true"';
+				}
+				echo '>';
 				echo '<option value="">' . esc_html__( '— Select —', 'wc-extra-product-options' ) . '</option>';
 				foreach ( $set['options'] as $idx => $opt ) {
 					echo '<option value="' . esc_attr( (string) $idx ) . '" data-add="' . esc_attr( wc_format_decimal( $opt['price'] ) ) . '">';
 					echo esc_html( $opt['label'] );
-					echo ' (+' . wp_strip_all_tags( wc_price( $opt['price'] ) ) . ')';
+					echo ' (+' . esc_html( wp_strip_all_tags( wc_price( $opt['price'] ) ) ) . ')';
 					echo '</option>';
 				}
 				echo '</select>';

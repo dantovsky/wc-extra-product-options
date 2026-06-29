@@ -38,20 +38,6 @@ define( 'WCEO_PATH', plugin_dir_path( __FILE__ ) );
 define( 'WCEO_URL', plugin_dir_url( __FILE__ ) );
 
 /**
- * Load plugin text domain for translations.
- *
- * @return void
- */
-function wceo_load_textdomain() {
-	load_plugin_textdomain(
-		'wc-extra-product-options',
-		false,
-		dirname( plugin_basename( WCEO_FILE ) ) . '/languages'
-	);
-}
-add_action( 'plugins_loaded', 'wceo_load_textdomain', 9 );
-
-/**
  * Bootstrap plugin after all plugins are loaded.
  *
  * Checks for WooCommerce dependency and verifies version compatibility.

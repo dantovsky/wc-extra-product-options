@@ -32,6 +32,24 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 	}
 
 	/**
+	 * Read extra option selections from the add-to-cart POST payload.
+	 *
+	 * WooCommerce handles add-to-cart request validation on the product form.
+	 * Callers validate each value against allowed sets (absint, sanitize_key).
+	 *
+	 * @return array<string, mixed> Unslashed selection data, or empty array when absent.
+	 */
+	protected static function get_post_selection_raw() {
+		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce validates add-to-cart requests.
+		if ( empty( $_POST[ self::CART_KEY ] ) || ! is_array( $_POST[ self::CART_KEY ] ) ) {
+			return array();
+		}
+
+		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Sanitized per field in validate_required_extras() and add_cart_item_data().
+		return wp_unslash( $_POST[ self::CART_KEY ] );
+	}
+
+	/**
 	 * Validate that required extra options are selected before adding to cart.
 	 *
 	 * Checks all visible sets marked as required and ensures at least one option
@@ -58,8 +76,11 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 		}
 
 		$raw = array();
-		if ( ! empty( $_POST['wceo_selection'] ) && is_array( $_POST['wceo_selection'] ) ) {
-			$raw = array_map( 'sanitize_key', wp_unslash( $_POST['wceo_selection'] ) );
+		$raw_post = self::get_post_selection_raw();
+		if ( ! empty( $raw_post ) ) {
+			foreach ( $raw_post as $set_id => $value ) {
+				$raw[ sanitize_key( (string) $set_id ) ] = $value;
+			}
 		}
 
 		foreach ( $visible as $set_def ) {
@@ -124,7 +145,8 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 	 * @return array Modified cart item data with extra options attached.
 	 */
 	public static function add_cart_item_data( $cart_item_data, $product_id, $variation_id ) {
-		if ( empty( $_POST['wceo_selection'] ) || ! is_array( $_POST['wceo_selection'] ) ) {
+		$raw = self::get_post_selection_raw();
+		if ( empty( $raw ) ) {
 			return $cart_item_data;
 		}
 
@@ -147,7 +169,6 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 			}
 		}
 
-		$raw     = wp_unslash( $_POST['wceo_selection'] );
 		$clean   = array();
 		$display = array();
 
