@@ -135,16 +135,8 @@
 		syncEnabledToggleVisual($(this).closest('.woo-extra-set'));
 	});
 
-	$('#woo-extra-add-set').on('click', function () {
-		var $sets = $('#woo-extra-sets');
-		var $src = $sets.find('.woo-extra-set').first();
-		if (!$src.length) {
-			return;
-		}
-		var oldIdx = $src.attr('data-set-index');
-		var newIdx = 'n' + Date.now();
-		var html = replaceSetIndex($src.prop('outerHTML'), oldIdx, newIdx);
-		var $box = $(html);
+	function prepareNewSetBox(html, oldIdx, newIdx) {
+		var $box = $(replaceSetIndex(html, oldIdx, newIdx));
 		$box.attr('data-set-index', newIdx);
 		$box.find('[data-set]').attr('data-set', newIdx);
 		$box.removeClass('woo-extra-set-collapsed');
@@ -175,16 +167,30 @@
 		$box.find('.woo-extra-rules-body').empty();
 		var defHeading = wooExtraAdmin.defaultSetHeading || 'Untitled';
 		$box.find('.woo-extra-set-heading').text(defHeading).addClass('is-placeholder');
-		$sets.append($box);
+		return $box;
+	}
+
+	$('#woo-extra-add-set').on('click', function () {
+		var $sets = $('#woo-extra-sets');
+		var $src = $sets.find('.woo-extra-set').first();
+		var newIdx = 'n' + Date.now();
+		var html;
+		var oldIdx;
+		if ($src.length) {
+			oldIdx = $src.attr('data-set-index');
+			html = $src.prop('outerHTML');
+		} else if (wooExtraAdmin.setBox) {
+			oldIdx = '{{SET}}';
+			html = wooExtraAdmin.setBox;
+		} else {
+			return;
+		}
+		$sets.append(prepareNewSetBox(html, oldIdx, newIdx));
 		initSetsSortable();
 	});
 
 	$(document).on('click', '.woo-extra-remove-set', function (e) {
 		e.stopPropagation();
-		var $sets = $('#woo-extra-sets');
-		if ($sets.find('.woo-extra-set').length < 2) {
-			return;
-		}
 		$(this).closest('.woo-extra-set').remove();
 		initSetsSortable();
 	});
@@ -210,10 +216,6 @@
 	});
 
 	$(document).on('click', '.woo-extra-remove-option', function () {
-		var $tb = $(this).closest('tbody');
-		if ($tb.find('tr').length < 2) {
-			return;
-		}
 		$(this).closest('tr').remove();
 	});
 

@@ -3,7 +3,7 @@ Contributors: dantiii
 Tags: woocommerce, product options, add-ons, product addons
 Requires at least: 6.5
 Tested up to: 7.0
-Stable tag: 1.3.1
+Stable tag: 1.3.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -82,6 +82,10 @@ Extra options and their prices are displayed in the cart, checkout, and order de
 No! Create as many options as needed per set.
 
 == Changelog ==
+
+= 1.3.2 =
+* Fix :: not removing when only one extra option
+* Change file names (CSS and JS)
 
 = 1.3.1 =
 * Fix :: price not updating on variable product with only one price

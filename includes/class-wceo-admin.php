@@ -56,18 +56,20 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 		if ( 'woocommerce_page_wceo-settings' !== $hook ) {
 			return;
 		}
+		$admin_css_path = WCEO_PATH . 'assets/css/admin-wceo.css';
+		$admin_js_path  = WCEO_PATH . 'assets/js/admin-wceo.js';
 		wp_enqueue_style(
-			'woo-extra-admin',
-			WCEO_URL . 'assets/css/admin-woo-extra.css',
+			'wceo-admin',
+			WCEO_URL . 'assets/css/admin-wceo.css',
 			array( 'dashicons' ),
-			WCEO_VERSION
+			file_exists( $admin_css_path ) ? (string) filemtime( $admin_css_path ) : WCEO_VERSION
 		);
 		wp_enqueue_script( 'jquery-ui-sortable' );
 		wp_enqueue_script(
-			'woo-extra-admin',
-			WCEO_URL . 'assets/js/admin-woo-extra.js',
+			'wceo-admin',
+			WCEO_URL . 'assets/js/admin-wceo.js',
 			array( 'jquery', 'jquery-ui-sortable' ),
-			WCEO_VERSION,
+			file_exists( $admin_js_path ) ? (string) filemtime( $admin_js_path ) : WCEO_VERSION,
 			true
 		);
 		$cats  = get_terms( array( 'taxonomy' => 'product_cat', 'hide_empty' => false ) );
@@ -99,10 +101,11 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 		}
 
 		wp_localize_script(
-			'woo-extra-admin',
+			'wceo-admin',
 			'wooExtraAdmin',
 			array(
 				'optionRow'          => self::get_option_row_markup( '{{SET}}', '{{I}}', '', '' ),
+				'setBox'             => self::get_set_box_markup( '{{SET}}', self::blank_set(), $cats, $tags, $prods, false ),
 				'ruleRowFirst'       => self::get_rule_row_markup( '{{SET}}', '{{RI}}', true, 'AND', 'product', 'equals', 0, $cats, $tags, $prods ),
 				'ruleRowNext'        => self::get_rule_row_markup( '{{SET}}', '{{RI}}', false, 'AND', 'product', 'equals', 0, $cats, $tags, $prods ),
 				'objects'            => $obj_map,
@@ -217,9 +220,10 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 
 				<div id="woo-extra-sets">
 					<?php
-					$sets                 = ! empty( $config['sets'] ) ? $config['sets'] : array();
-					$has_persisted_sets   = ! empty( $config['sets'] );
-					if ( empty( $sets ) ) {
+					$config_saved       = false !== get_option( WCEO_Core::OPTION_KEY, false );
+					$sets               = isset( $config['sets'] ) && is_array( $config['sets'] ) ? $config['sets'] : array();
+					$has_persisted_sets = $config_saved;
+					if ( empty( $sets ) && ! $config_saved ) {
 						$sets[] = self::blank_set();
 					}
 					foreach ( $sets as $s => $set ) {
@@ -260,6 +264,23 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 	}
 
 	/**
+	 * Return HTML markup for a collapsible set configuration box.
+	 *
+	 * @param int|string $s                  Set index in the form array.
+	 * @param array      $set                Set configuration data.
+	 * @param array      $cats               WP_Term objects for product categories.
+	 * @param array      $tags               WP_Term objects for product tags.
+	 * @param array      $products_for_select Associative array of product ID => name.
+	 * @param bool       $start_collapsed    If true, box renders in collapsed state.
+	 * @return string HTML markup.
+	 */
+	protected static function get_set_box_markup( $s, $set, $cats, $tags, $products_for_select, $start_collapsed = false ) {
+		ob_start();
+		self::render_set_box( $s, $set, $cats, $tags, $products_for_select, $start_collapsed );
+		return ob_get_clean();
+	}
+
+	/**
 	 * Render a collapsible set configuration box.
 	 *
 	 * Renders the HTML form for a single option set, including name, type, options table,
@@ -278,7 +299,7 @@ if ( ! class_exists( 'WCEO_Admin' ) ) {
 		$set_id    = isset( $set['id'] ) ? $set['id'] : WCEO_Core::generate_set_id();
 		$name      = isset( $set['name'] ) ? $set['name'] : '';
 		$choice    = isset( $set['choice_type'] ) ? $set['choice_type'] : 'exclusive';
-		$options   = ! empty( $set['options'] ) ? $set['options'] : array( array( 'label' => '', 'price' => '0' ) );
+		$options   = isset( $set['options'] ) && is_array( $set['options'] ) ? $set['options'] : array( array( 'label' => '', 'price' => '0' ) );
 		$css_class = isset( $set['css_class'] ) ? $set['css_class'] : '';
 		$css_id    = isset( $set['css_id'] ) ? $set['css_id'] : '';
 		$rules     = isset( $set['rules'] ) && is_array( $set['rules'] ) ? $set['rules'] : array();
