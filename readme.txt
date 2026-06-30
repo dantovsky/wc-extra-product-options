@@ -1,9 +1,9 @@
-=== Extra Product Options for WooCommerce ===
+=== Global Extra Product Options for WooCommerce ===
 Contributors: dantiii
 Tags: woocommerce, product options, add-ons, product addons
 Requires at least: 6.5
 Tested up to: 7.0
-Stable tag: 1.3.2
+Stable tag: 1.4.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
@@ -13,7 +13,7 @@ Add customizable extra product options to WooCommerce with pricing and display r
 
 == Description ==
 
-Extra Product Options for WooCommerce allows store administrators to create custom sets of add-on options for products with flexible pricing and conditional display rules. Perfect for offering product customizations, warranties, gift wrapping, and other add-ons directly on the product page.
+Global Extra Product Options for WooCommerce allows store administrators to create custom sets of add-on options for products with flexible pricing and conditional display rules. Perfect for offering product customizations, warranties, gift wrapping, and other add-ons directly on the product page.
 
 **Key Features:**
 
@@ -83,7 +83,14 @@ No! Create as many options as needed per set.
 
 == Changelog ==
 
+= 1.4.0 =
+* Fix :: added scaping, fixed warning and error from Plugin Check
+* Big change :: changed plugin slug from 'wc_extra_product_options' to 'global_extra_product_options'
+
 = 1.3.2 =
+* Renamed plugin slug to global-extra-product-options (WordPress.org trademark compliance)
+* Renamed identifiers from wceo/WCEO to gepo/GEPO across code, assets, and database keys
+* Added migration for existing settings and cart session data from previous slug
 * Fix :: not removing when only one extra option
 * Change file names (CSS and JS)
 
@@ -144,7 +151,7 @@ Recommended update with WordPress.org compatibility improvements and better code
 
 == Support ==
 
-For support, please visit the [plugin support forum](https://wordpress.org/support/plugin/wc-extra-product-options/) or contact the developer.
+For support, please visit the [plugin support forum](https://wordpress.org/support/plugin/global-extra-product-options/) or contact the developer.
 
 == Screenshots ==
 

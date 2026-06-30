@@ -2,17 +2,18 @@
 /**
  * Core configuration, validation, and rule evaluation.
  *
- * @package WC_Extra_Product_Options
+ * @package Global_Extra_Product_Options
  * @license GPLv2
- * @link https://wordpress.org/plugins/wc-extra-product-options/
+ * @link https://wordpress.org/plugins/global-extra-product-options/
  */
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'WCEO_Core' ) ) {
-	class WCEO_Core {
+if ( ! class_exists( 'GEPO_Core' ) ) {
+	class GEPO_Core {
 
-	const OPTION_KEY = 'wc_extra_product_options_config';
+	const OPTION_KEY        = 'global_extra_product_options_config';
+	const LEGACY_OPTION_KEY = 'wc_extra_product_options_config';
 
 	/**
 	 * @var array|null
@@ -43,7 +44,17 @@ if ( ! class_exists( 'WCEO_Core' ) ) {
 			return self::$config_cache;
 		}
 		$defaults = self::default_config();
-		$stored   = get_option( self::OPTION_KEY, array() );
+		$stored   = get_option( self::OPTION_KEY, false );
+		if ( false === $stored ) {
+			$legacy = get_option( self::LEGACY_OPTION_KEY, false );
+			if ( false !== $legacy ) {
+				update_option( self::OPTION_KEY, $legacy );
+				delete_option( self::LEGACY_OPTION_KEY );
+				$stored = $legacy;
+			} else {
+				$stored = array();
+			}
+		}
 		if ( ! is_array( $stored ) ) {
 			$stored = array();
 		}
@@ -71,7 +82,7 @@ if ( ! class_exists( 'WCEO_Core' ) ) {
 	 */
 	public static function default_config() {
 		return array(
-			'global_label'      => __( 'Extras', 'wc-extra-product-options' ),
+			'global_label'      => __( 'Extras', 'global-extra-product-options' ),
 			'show_global_label' => true,
 			'sets'              => array(),
 		);

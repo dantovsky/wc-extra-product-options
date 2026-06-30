@@ -1,4 +1,4 @@
-/* global jQuery, wooExtraAdmin */
+/* global jQuery, gepoAdmin */
 (function ($) {
 	'use strict';
 
@@ -19,8 +19,8 @@
 	}
 
 	function refillObjectSelect($select, subject) {
-		var list = wooExtraAdmin.objects && wooExtraAdmin.objects[subject] ? wooExtraAdmin.objects[subject] : [];
-		var chooseText = wooExtraAdmin.chooseOption || '\u2014 Choose \u2014';
+		var list = gepoAdmin.objects && gepoAdmin.objects[subject] ? gepoAdmin.objects[subject] : [];
+		var chooseText = gepoAdmin.chooseOption || '\u2014 Choose \u2014';
 		$select.empty();
 		$select.append($('<option></option>').attr('value', '0').text(chooseText));
 		$.each(list, function (_, item) {
@@ -69,7 +69,7 @@
 	function syncEnabledToggleVisual($set) {
 		var on = $set.find('.woo-extra-set-enabled-cb').prop('checked');
 		$set.find('.woo-extra-set-enabled-toggle').toggleClass('is-on', !!on).toggleClass('is-off', !on);
-		var labels = wooExtraAdmin.enabledLabels;
+		var labels = gepoAdmin.enabledLabels;
 		var onText = labels && labels.on ? labels.on : 'Enabled';
 		var offText = labels && labels.off ? labels.off : 'Disabled';
 		$set.find('.woo-extra-set-enabled-text').text(on ? onText : offText);
@@ -162,10 +162,10 @@
 		$box.find('.woo-extra-set-enabled-cb').prop('checked', true);
 		syncEnabledToggleVisual($box);
 		$box.find('.woo-extra-options-body').empty().append(
-			$(replaceSetIndex(wooExtraAdmin.optionRow, '{{SET}}', newIdx).replace(/\{\{I\}\}/g, '0'))
+			$(replaceSetIndex(gepoAdmin.optionRow, '{{SET}}', newIdx).replace(/\{\{I\}\}/g, '0'))
 		);
 		$box.find('.woo-extra-rules-body').empty();
-		var defHeading = wooExtraAdmin.defaultSetHeading || 'Untitled';
+		var defHeading = gepoAdmin.defaultSetHeading || 'Untitled';
 		$box.find('.woo-extra-set-heading').text(defHeading).addClass('is-placeholder');
 		return $box;
 	}
@@ -179,9 +179,9 @@
 		if ($src.length) {
 			oldIdx = $src.attr('data-set-index');
 			html = $src.prop('outerHTML');
-		} else if (wooExtraAdmin.setBox) {
+		} else if (gepoAdmin.setBox) {
 			oldIdx = '{{SET}}';
-			html = wooExtraAdmin.setBox;
+			html = gepoAdmin.setBox;
 		} else {
 			return;
 		}
@@ -198,7 +198,7 @@
 	$(document).on('input', '.woo-extra-set-name-input', function () {
 		var $set = $(this).closest('.woo-extra-set');
 		var v = $(this).val().trim();
-		var def = wooExtraAdmin.defaultSetHeading || 'Untitled';
+		var def = gepoAdmin.defaultSetHeading || 'Untitled';
 		var $h = $set.find('.woo-extra-set-heading');
 		$h.text(v || def);
 		$h.toggleClass('is-placeholder', !v);
@@ -211,7 +211,7 @@
 		}
 		var $tbody = $(this).closest('.inside').find('.woo-extra-options-body');
 		var ni = nextOptionIndex($tbody);
-		var row = wooExtraAdmin.optionRow.replace(/\{\{SET\}\}/g, setIdx).replace(/\{\{I\}\}/g, ni);
+		var row = gepoAdmin.optionRow.replace(/\{\{SET\}\}/g, setIdx).replace(/\{\{I\}\}/g, ni);
 		$tbody.append(row);
 	});
 
@@ -227,7 +227,7 @@
 		var $tbody = $(this).closest('.inside').find('.woo-extra-rules-body');
 		var ri = nextRuleIndex($tbody);
 		var isEmpty = $tbody.children('tr').length === 0;
-		var tpl = isEmpty ? wooExtraAdmin.ruleRowFirst : wooExtraAdmin.ruleRowNext;
+		var tpl = isEmpty ? gepoAdmin.ruleRowFirst : gepoAdmin.ruleRowNext;
 		var row = tpl.replace(/\{\{SET\}\}/g, setIdx).replace(/\{\{RI\}\}/g, ri);
 		var $row = $(row);
 		if (!isEmpty) {

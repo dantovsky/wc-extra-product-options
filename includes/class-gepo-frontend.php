@@ -2,15 +2,15 @@
 /**
  * Frontend product page rendering and price calculation scripts.
  *
- * @package WC_Extra_Product_Options
+ * @package Global_Extra_Product_Options
  * @license GPLv2
- * @link https://wordpress.org/plugins/wc-extra-product-options/
+ * @link https://wordpress.org/plugins/global-extra-product-options/
  */
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'WCEO_Frontend' ) ) {
-	class WCEO_Frontend {
+if ( ! class_exists( 'GEPO_Frontend' ) ) {
+	class GEPO_Frontend {
 
 	/**
 	 * Initialize the Frontend class.
@@ -42,29 +42,29 @@ if ( ! class_exists( 'WCEO_Frontend' ) ) {
 			return;
 		}
 		$pid = (int) $product->get_id();
-		$sets = WCEO_Core::get_visible_sets_for_product( $pid );
+		$sets = GEPO_Core::get_visible_sets_for_product( $pid );
 		if ( empty( $sets ) ) {
 			return;
 		}
 
 		wp_register_style(
-			'wceo-frontend',
-			WCEO_URL . 'assets/css/frontend-wceo.css',
+			'gepo-frontend',
+			GEPO_URL . 'assets/css/frontend-gepo.css',
 			array(),
-			WCEO_VERSION
+			GEPO_VERSION
 		);
-		wp_enqueue_style( 'wceo-frontend' );
+		wp_enqueue_style( 'gepo-frontend' );
 
 		wp_register_script(
-			'wceo-frontend',
-			WCEO_URL . 'assets/js/frontend-wceo.js',
+			'gepo-frontend',
+			GEPO_URL . 'assets/js/frontend-gepo.js',
 			array( 'jquery', 'wc-add-to-cart-variation' ),
-			WCEO_VERSION,
+			GEPO_VERSION,
 			true
 		);
 
 		$base_display = (float) wc_get_price_to_display( $product );
-		$config       = WCEO_Core::get_config();
+		$config       = GEPO_Core::get_config();
 
 		$price_suffix = '';
 		if ( $product && is_a( $product, 'WC_Product' ) && method_exists( $product, 'get_price_suffix' ) ) {
@@ -90,10 +90,10 @@ if ( ! class_exists( 'WCEO_Frontend' ) ) {
 			);
 		}
 
-		wp_enqueue_script( 'wceo-frontend' );
+		wp_enqueue_script( 'gepo-frontend' );
 		wp_localize_script(
-			'wceo-frontend',
-			'wceoFront',
+			'gepo-frontend',
+			'gepoFront',
 			array(
 				'isVariable'   => $product->is_type( 'variable' ),
 				'basePrice'    => $base_display,
@@ -105,7 +105,7 @@ if ( ! class_exists( 'WCEO_Frontend' ) ) {
 				'currencyPos'  => get_option( 'woocommerce_currency_pos', 'left' ),
 				'priceSuffix'  => wp_kses_post( $price_suffix ),
 				'strings'      => array(
-					'requiredMultiple' => __( 'Please select at least one option in each required extra (multiple type).', 'wc-extra-product-options' ),
+					'requiredMultiple' => __( 'Please select at least one option in each required extra (multiple type).', 'global-extra-product-options' ),
 				),
 			)
 		);
@@ -129,17 +129,17 @@ if ( ! class_exists( 'WCEO_Frontend' ) ) {
 		}
 
 		$pid  = (int) $product->get_id();
-		$sets = WCEO_Core::get_visible_sets_for_product( $pid );
+		$sets = GEPO_Core::get_visible_sets_for_product( $pid );
 		if ( empty( $sets ) ) {
 			return;
 		}
 
-		$config = WCEO_Core::get_config();
+		$config = GEPO_Core::get_config();
 
-		echo '<div class="wceo-fields-wrap">';
+		echo '<div class="gepo-fields-wrap">';
 
 		if ( ! empty( $config['show_global_label'] ) && ! empty( $config['global_label'] ) ) {
-			echo '<div class="wceo-global-label">' . esc_html( $config['global_label'] ) . '</div>';
+			echo '<div class="gepo-global-label">' . esc_html( $config['global_label'] ) . '</div>';
 		}
 
 		foreach ( $sets as $set ) {
@@ -147,51 +147,63 @@ if ( ! class_exists( 'WCEO_Frontend' ) ) {
 			$cc  = isset( $set['css_class'] ) ? $set['css_class'] : '';
 			$sid = isset( $set['id'] ) ? $set['id'] : '';
 
-			$classes = trim( 'wceo-set wceo-set-' . sanitize_html_class( $sid, 'set' ) . ' ' . $cc );
-			$attr_id = $cid !== '' ? ' id="' . esc_attr( $cid ) . '"' : '';
+			$classes = trim( 'gepo-set gepo-set-' . sanitize_html_class( $sid, 'set' ) . ' ' . $cc );
 			$req     = ! empty( $set['required'] );
-			$dreq    = $req ? ' data-required="1"' : '';
 
-			echo '<fieldset class="' . esc_attr( $classes ) . '"' . $attr_id . $dreq . '>';
+			echo '<fieldset class="' . esc_attr( $classes ) . '"';
+			if ( '' !== $cid ) {
+				echo ' id="' . esc_attr( $cid ) . '"';
+			}
+			if ( $req ) {
+				echo ' data-required="1"';
+			}
+			echo '>';
 			if ( ! empty( $set['name'] ) ) {
-				echo '<legend class="wceo-set-legend">' . esc_html( $set['name'] ) . '</legend>';
+				echo '<legend class="gepo-set-legend">' . esc_html( $set['name'] ) . '</legend>';
 			}
 
-			$fname = 'wceo_selection[' . esc_attr( $sid ) . ']';
+			$fname = 'gepo_selection[' . esc_attr( $sid ) . ']';
 			$type  = isset( $set['choice_type'] ) ? $set['choice_type'] : 'exclusive';
 
 			if ( 'multiple' === $type ) {
-				echo '<ul class="wceo-options wceo-options-multiple">';
+				echo '<ul class="gepo-options gepo-options-multiple">';
 				foreach ( $set['options'] as $idx => $opt ) {
-					$lid = 'wceo-' . $sid . '-' . $idx;
+					$lid = 'gepo-' . $sid . '-' . $idx;
 					echo '<li><label for="' . esc_attr( $lid ) . '">';
-					echo '<input type="checkbox" id="' . esc_attr( $lid ) . '" name="' . esc_attr( $fname ) . '[]" value="' . esc_attr( (string) $idx ) . '" class="wceo-input" data-add="' . esc_attr( wc_format_decimal( $opt['price'] ) ) . '" /> ';
+					echo '<input type="checkbox" id="' . esc_attr( $lid ) . '" name="' . esc_attr( $fname ) . '[]" value="' . esc_attr( (string) $idx ) . '" class="gepo-input" data-add="' . esc_attr( wc_format_decimal( $opt['price'] ) ) . '" /> ';
 					echo esc_html( $opt['label'] );
-					echo ' <span class="wceo-option-suffix">(+' . wp_kses_post( wc_price( $opt['price'] ) ) . ')</span>';
+					echo ' <span class="gepo-option-suffix">(+' . wp_kses_post( wc_price( $opt['price'] ) ) . ')</span>';
 					echo '</label></li>';
 				}
 				echo '</ul>';
 			} elseif ( 'exclusive_radio' === $type ) {
-				$req_attrs = $req ? ' required aria-required="true"' : '';
-				echo '<ul class="wceo-options wceo-options-radio">';
+				echo '<ul class="gepo-options gepo-options-radio">';
+				$first_radio = true;
 				foreach ( $set['options'] as $idx => $opt ) {
-					$lid = 'wceo-' . $sid . '-' . $idx;
+					$lid = 'gepo-' . $sid . '-' . $idx;
 					echo '<li><label for="' . esc_attr( $lid ) . '">';
-					echo '<input type="radio" id="' . esc_attr( $lid ) . '" name="' . esc_attr( $fname ) . '" value="' . esc_attr( (string) $idx ) . '" class="wceo-input" data-add="' . esc_attr( wc_format_decimal( $opt['price'] ) ) . '"' . $req_attrs . ' /> ';
+					echo '<input type="radio" id="' . esc_attr( $lid ) . '" name="' . esc_attr( $fname ) . '" value="' . esc_attr( (string) $idx ) . '" class="gepo-input" data-add="' . esc_attr( wc_format_decimal( $opt['price'] ) ) . '"';
+					if ( $req && $first_radio ) {
+						echo ' required aria-required="true"';
+						$first_radio = false;
+					}
+					echo ' /> ';
 					echo esc_html( $opt['label'] );
-					echo ' <span class="wceo-option-suffix">(+' . wp_kses_post( wc_price( $opt['price'] ) ) . ')</span>';
+					echo ' <span class="gepo-option-suffix">(+' . wp_kses_post( wc_price( $opt['price'] ) ) . ')</span>';
 					echo '</label></li>';
-					$req_attrs = '';
 				}
 				echo '</ul>';
 			} else {
-				$req_attrs = $req ? ' required aria-required="true"' : '';
-				echo '<select name="' . esc_attr( $fname ) . '" class="wceo-input wceo-select" data-exclusive="1"' . $req_attrs . '>';
-				echo '<option value="">' . esc_html__( '— Select —', 'wc-extra-product-options' ) . '</option>';
+				echo '<select name="' . esc_attr( $fname ) . '" class="gepo-input gepo-select" data-exclusive="1"';
+				if ( $req ) {
+					echo ' required aria-required="true"';
+				}
+				echo '>';
+				echo '<option value="">' . esc_html__( '— Select —', 'global-extra-product-options' ) . '</option>';
 				foreach ( $set['options'] as $idx => $opt ) {
 					echo '<option value="' . esc_attr( (string) $idx ) . '" data-add="' . esc_attr( wc_format_decimal( $opt['price'] ) ) . '">';
 					echo esc_html( $opt['label'] );
-					echo ' (+' . wp_strip_all_tags( wc_price( $opt['price'] ) ) . ')';
+					echo ' (+' . esc_html( wp_strip_all_tags( wc_price( $opt['price'] ) ) ) . ')';
 					echo '</option>';
 				}
 				echo '</select>';
