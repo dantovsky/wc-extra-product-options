@@ -2,17 +2,18 @@
 /**
  * Cart, checkout, and order processing with extra options.
  *
- * @package WC_Extra_Product_Options
+ * @package Global_Extra_Product_Options
  * @license GPLv2
- * @link https://wordpress.org/plugins/wc-extra-product-options/
+ * @link https://wordpress.org/plugins/global-extra-product-options/
  */
 
 defined( 'ABSPATH' ) || exit;
 
-if ( ! class_exists( 'WCEO_Cart' ) ) {
-	class WCEO_Cart {
+if ( ! class_exists( 'GEPO_Cart' ) ) {
+	class GEPO_Cart {
 
-	const CART_KEY = 'wceo_selection';
+	const CART_KEY         = 'gepo_selection';
+	const LEGACY_CART_KEYS = array( 'wceo_selection', 'woo_extra_selection' );
 
 	/**
 	 * Initialize the Cart class.
@@ -41,12 +42,15 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 	 */
 	protected static function get_post_selection_raw() {
 		// phpcs:ignore WordPress.Security.NonceVerification.Missing -- WooCommerce validates add-to-cart requests.
-		if ( empty( $_POST[ self::CART_KEY ] ) || ! is_array( $_POST[ self::CART_KEY ] ) ) {
-			return array();
+		$post_keys = array_merge( array( self::CART_KEY ), self::LEGACY_CART_KEYS );
+		foreach ( $post_keys as $post_key ) {
+			if ( ! empty( $_POST[ $post_key ] ) && is_array( $_POST[ $post_key ] ) ) {
+				// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Sanitized per field in validate_required_extras() and add_cart_item_data().
+				return wp_unslash( $_POST[ $post_key ] );
+			}
 		}
 
-		// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized, WordPress.Security.NonceVerification.Missing -- Sanitized per field in validate_required_extras() and add_cart_item_data().
-		return wp_unslash( $_POST[ self::CART_KEY ] );
+		return array();
 	}
 
 	/**
@@ -70,7 +74,7 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 			return $passed;
 		}
 
-		$visible = WCEO_Core::get_visible_sets_for_product( $parent );
+		$visible = GEPO_Core::get_visible_sets_for_product( $parent );
 		if ( empty( $visible ) ) {
 			return $passed;
 		}
@@ -107,24 +111,24 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 					}
 				}
 				if ( ! $ok ) {
-					$label = isset( $set_def['name'] ) && $set_def['name'] !== '' ? $set_def['name'] : __( 'Extras', 'wc-extra-product-options' );
+					$label = isset( $set_def['name'] ) && $set_def['name'] !== '' ? $set_def['name'] : __( 'Extras', 'global-extra-product-options' );
 					/* translators: %s: extra set name */
-					wc_add_notice( sprintf( __( 'Please select at least one option in "%s".', 'wc-extra-product-options' ), wp_strip_all_tags( $label ) ), 'error' );
+					wc_add_notice( sprintf( __( 'Please select at least one option in "%s".', 'global-extra-product-options' ), wp_strip_all_tags( $label ) ), 'error' );
 					return false;
 				}
 			} else {
 				$incoming = isset( $raw[ $sid ] ) ? $raw[ $sid ] : '';
 				if ( '' === (string) $incoming ) {
-					$label = isset( $set_def['name'] ) && $set_def['name'] !== '' ? $set_def['name'] : __( 'Extras', 'wc-extra-product-options' );
+					$label = isset( $set_def['name'] ) && $set_def['name'] !== '' ? $set_def['name'] : __( 'Extras', 'global-extra-product-options' );
 					/* translators: %s: extra set name */
-					wc_add_notice( sprintf( __( 'Please select an option in "%s".', 'wc-extra-product-options' ), wp_strip_all_tags( $label ) ), 'error' );
+					wc_add_notice( sprintf( __( 'Please select an option in "%s".', 'global-extra-product-options' ), wp_strip_all_tags( $label ) ), 'error' );
 					return false;
 				}
 				$i = absint( $incoming );
 				if ( ! isset( $set_def['options'][ $i ] ) ) {
-					$label = isset( $set_def['name'] ) && $set_def['name'] !== '' ? $set_def['name'] : __( 'Extras', 'wc-extra-product-options' );
+					$label = isset( $set_def['name'] ) && $set_def['name'] !== '' ? $set_def['name'] : __( 'Extras', 'global-extra-product-options' );
 					/* translators: %s: extra set name */
-					wc_add_notice( sprintf( __( 'Please select an option in "%s".', 'wc-extra-product-options' ), wp_strip_all_tags( $label ) ), 'error' );
+					wc_add_notice( sprintf( __( 'Please select an option in "%s".', 'global-extra-product-options' ), wp_strip_all_tags( $label ) ), 'error' );
 					return false;
 				}
 			}
@@ -157,7 +161,7 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 			return $cart_item_data;
 		}
 
-		$visible = WCEO_Core::get_visible_sets_for_product( $parent );
+		$visible = GEPO_Core::get_visible_sets_for_product( $parent );
 		if ( empty( $visible ) ) {
 			return $cart_item_data;
 		}
@@ -193,12 +197,12 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 				$indices = array_values( array_unique( $indices ) );
 				if ( ! empty( $indices ) ) {
 					$clean[ $set_id ] = $indices;
-					$labels           = WCEO_Core::labels_for_selection( $set_def, $indices );
-					$set_name         = isset( $set_def['name'] ) && $set_def['name'] !== '' ? $set_def['name'] : __( 'Extras', 'wc-extra-product-options' );
+					$labels           = GEPO_Core::labels_for_selection( $set_def, $indices );
+					$set_name         = isset( $set_def['name'] ) && $set_def['name'] !== '' ? $set_def['name'] : __( 'Extras', 'global-extra-product-options' );
 					$display[]        = array(
 						'set_name' => $set_name,
 						'labels'   => $labels,
-							'total'    => WCEO_Core::calculate_addon_total( $set_def, $indices ),
+							'total'    => GEPO_Core::calculate_addon_total( $set_def, $indices ),
 					);
 				}
 			} else {
@@ -208,12 +212,12 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 				$i = absint( $incoming );
 				if ( isset( $set_def['options'][ $i ] ) ) {
 					$clean[ $set_id ] = array( $i );
-					$labels           = WCEO_Core::labels_for_selection( $set_def, array( $i ) );
-					$set_name         = isset( $set_def['name'] ) && $set_def['name'] !== '' ? $set_def['name'] : __( 'Extras', 'wc-extra-product-options' );
+					$labels           = GEPO_Core::labels_for_selection( $set_def, array( $i ) );
+					$set_name         = isset( $set_def['name'] ) && $set_def['name'] !== '' ? $set_def['name'] : __( 'Extras', 'global-extra-product-options' );
 					$display[]        = array(
 						'set_name' => $set_name,
 						'labels'   => $labels,
-							'total'    => WCEO_Core::calculate_addon_total( $set_def, array( $i ) ),
+							'total'    => GEPO_Core::calculate_addon_total( $set_def, array( $i ) ),
 					);
 				}
 			}
@@ -246,6 +250,14 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 	 * @return array Modified cart item with restored extra option data.
 	 */
 	public static function get_cart_item_from_session( $cart_item, $values ) {
+		if ( empty( $values[ self::CART_KEY ] ) ) {
+			foreach ( self::LEGACY_CART_KEYS as $legacy_key ) {
+				if ( ! empty( $values[ $legacy_key ] ) ) {
+					$values[ self::CART_KEY ] = $values[ $legacy_key ];
+					break;
+				}
+			}
+		}
 		if ( ! empty( $values[ self::CART_KEY ] ) ) {
 			$cart_item[ self::CART_KEY ] = $values[ self::CART_KEY ];
 		}
@@ -283,11 +295,11 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 
 			$addon = 0.0;
 			foreach ( $item[ self::CART_KEY ] as $set_id => $indices ) {
-				$set = WCEO_Core::get_set_by_id( $set_id );
+				$set = GEPO_Core::get_set_by_id( $set_id );
 				if ( ! $set ) {
 					continue;
 				}
-				$addon += WCEO_Core::calculate_addon_total( $set, $indices );
+				$addon += GEPO_Core::calculate_addon_total( $set, $indices );
 			}
 
 			$item['data']->set_price( $base + $addon );
@@ -312,7 +324,7 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 			if ( empty( $row['labels'] ) ) {
 				continue;
 			}
-			$name = isset( $row['set_name'] ) ? $row['set_name'] : __( 'Extras', 'wc-extra-product-options' );
+			$name = isset( $row['set_name'] ) ? $row['set_name'] : __( 'Extras', 'global-extra-product-options' );
 			$item_data[] = array(
 				'name'    => $name,
 				'value'   => implode( ', ', array_map( 'wp_strip_all_tags', $row['labels'] ) ),
@@ -341,7 +353,7 @@ if ( ! class_exists( 'WCEO_Cart' ) ) {
 			if ( empty( $row['labels'] ) ) {
 				continue;
 			}
-			$name = isset( $row['set_name'] ) ? $row['set_name'] : __( 'Extras', 'wc-extra-product-options' );
+			$name = isset( $row['set_name'] ) ? $row['set_name'] : __( 'Extras', 'global-extra-product-options' );
 			$item->add_meta_data( $name, implode( ', ', $row['labels'] ), true );
 		}
 	}

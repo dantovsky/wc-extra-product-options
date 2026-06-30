@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Extra Product Options for WooCommerce 1.2.2\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/wc-extra-product-options/\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/global-extra-product-options/\n"
 "POT-Creation-Date: 2026-06-05 12:00:00+00:00\n"
 "PO-Revision-Date: 2026-06-05 12:00:00+00:00\n"
 "Last-Translator: Dante Marinho\n"
@@ -16,225 +16,225 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Cursor\n"
 
-#: wc-extra-product-options.php:68
-msgid "Extra Product Options requires WooCommerce to be active."
+#: global-extra-product-options.php:68
+msgid "Global Extra Product Options requires WooCommerce to be active."
 msgstr "Extra Product Options requer o WooCommerce ativo."
 
 #. translators: %s: WooCommerce version
-#: wc-extra-product-options.php:85
-msgid "Extra Product Options was tested with WooCommerce 8.2 or higher (recommended for WordPress 6.9 and WooCommerce 10.6). Your version is %s."
+#: global-extra-product-options.php:85
+msgid "Global Extra Product Options was tested with WooCommerce 8.2 or higher (recommended for WordPress 6.9 and WooCommerce 10.6). Your version is %s."
 msgstr "Extra Product Options foi testado com WooCommerce 8.2 ou superior (recomendado para WordPress 6.9 e WooCommerce 10.6). Sua versão é %s."
 
-#: wc-extra-product-options.php:123
+#: global-extra-product-options.php:123
 msgid "Settings"
 msgstr "Configurações"
 
-#: includes/class-wceo-admin.php:38
-#: includes/class-wceo-admin.php:39
-#: includes/class-wceo-admin.php:185
-msgid "Product Extra Options"
+#: includes/class-gepo-admin.php:38
+#: includes/class-gepo-admin.php:39
+#: includes/class-gepo-admin.php:185
+msgid "Global Extra Product Options"
 msgstr "Opções Extras"
 
-#: includes/class-wceo-admin.php:109
-#: includes/class-wceo-admin.php:288
+#: includes/class-gepo-admin.php:109
+#: includes/class-gepo-admin.php:288
 msgid "Untitled"
 msgstr "Sem nome"
 
-#: includes/class-wceo-admin.php:110
-#: includes/class-wceo-admin.php:516
+#: includes/class-gepo-admin.php:110
+#: includes/class-gepo-admin.php:516
 msgid "— Choose —"
 msgstr "— Escolher —"
 
-#: includes/class-wceo-admin.php:112
-#: includes/class-wceo-admin.php:321
+#: includes/class-gepo-admin.php:112
+#: includes/class-gepo-admin.php:321
 msgid "Enabled"
 msgstr "Habilitado"
 
-#: includes/class-wceo-admin.php:113
-#: includes/class-wceo-admin.php:321
+#: includes/class-gepo-admin.php:113
+#: includes/class-gepo-admin.php:321
 msgid "Disabled"
 msgstr "Desabilitado"
 
-#: includes/class-wceo-admin.php:145
+#: includes/class-gepo-admin.php:145
 msgid "Settings saved."
 msgstr "Configurações salvas."
 
-#: includes/class-wceo-admin.php:186
+#: includes/class-gepo-admin.php:186
 msgid "Configure global labels, option sets, and display rules. Logic is evaluated on the server before showing the form on the product page."
 msgstr "Configure etiquetas globais, conjuntos de opções e regras de exibição. A lógica é avaliada no servidor antes de mostrar o formulário na página do produto."
 
-#: includes/class-wceo-admin.php:193
+#: includes/class-gepo-admin.php:193
 msgid "Global label"
 msgstr "Etiqueta global"
 
-#: includes/class-wceo-admin.php:196
-#: includes/class-wceo-admin.php:358
+#: includes/class-gepo-admin.php:196
+#: includes/class-gepo-admin.php:358
 msgid "Label"
 msgstr "Etiqueta"
 
-#: includes/class-wceo-admin.php:202
+#: includes/class-gepo-admin.php:202
 msgid "Show label"
 msgstr "Mostrar etiqueta"
 
-#: includes/class-wceo-admin.php:206
+#: includes/class-gepo-admin.php:206
 msgid "Display the global label above extras on the product page"
 msgstr "Exibir a etiqueta global acima dos extras na página do produto"
 
-#: includes/class-wceo-admin.php:214
+#: includes/class-gepo-admin.php:214
 msgid "Extra sets"
 msgstr "Conjuntos de extras"
 
-#: includes/class-wceo-admin.php:215
+#: includes/class-gepo-admin.php:215
 msgid "Add set"
 msgstr "Adicionar conjunto"
 
-#: includes/class-wceo-admin.php:232
+#: includes/class-gepo-admin.php:232
 msgid "Save changes"
 msgstr "Salvar alterações"
 
-#: includes/class-wceo-admin.php:299
+#: includes/class-gepo-admin.php:299
 msgid "Drag to reorder"
 msgstr "Arrastar para reordenar"
 
-#: includes/class-wceo-admin.php:304
+#: includes/class-gepo-admin.php:304
 msgid "Set order"
 msgstr "Ordem do conjunto"
 
-#: includes/class-wceo-admin.php:305
+#: includes/class-gepo-admin.php:305
 msgid "Move set up"
 msgstr "Mover conjunto para cima"
 
-#: includes/class-wceo-admin.php:306
+#: includes/class-gepo-admin.php:306
 msgid "Move set down"
 msgstr "Mover conjunto para baixo"
 
-#: includes/class-wceo-admin.php:312
+#: includes/class-gepo-admin.php:312
 msgid "Required"
 msgstr "Obrigatório"
 
-#: includes/class-wceo-admin.php:332
+#: includes/class-gepo-admin.php:332
 msgid "Set name"
 msgstr "Nome do conjunto"
 
-#: includes/class-wceo-admin.php:333
+#: includes/class-gepo-admin.php:333
 msgid "e.g. Finishes"
 msgstr "ex.: Acabamentos"
 
-#: includes/class-wceo-admin.php:336
+#: includes/class-gepo-admin.php:336
 msgid "Choice type"
 msgstr "Tipo de escolha"
 
-#: includes/class-wceo-admin.php:339
+#: includes/class-gepo-admin.php:339
 msgid "Exclusive (select)"
 msgstr "Exclusiva (select)"
 
-#: includes/class-wceo-admin.php:340
+#: includes/class-gepo-admin.php:340
 msgid "Exclusive (radio)"
 msgstr "Exclusiva (radio)"
 
-#: includes/class-wceo-admin.php:341
+#: includes/class-gepo-admin.php:341
 msgid "Multiple (checkbox)"
 msgstr "Múltipla (checkbox)"
 
-#: includes/class-wceo-admin.php:346
+#: includes/class-gepo-admin.php:346
 msgid "Class and ID (CSS)"
 msgstr "Classe e ID (CSS)"
 
-#: includes/class-wceo-admin.php:354
+#: includes/class-gepo-admin.php:354
 msgid "Options and prices"
 msgstr "Opções e preços"
 
-#: includes/class-wceo-admin.php:359
+#: includes/class-gepo-admin.php:359
 msgid "Price (+)"
 msgstr "Preço (+)"
 
-#: includes/class-wceo-admin.php:371
+#: includes/class-gepo-admin.php:371
 msgid "Add option"
 msgstr "Adicionar opção"
 
-#: includes/class-wceo-admin.php:373
+#: includes/class-gepo-admin.php:373
 msgid "Display rules"
 msgstr "Regras de exibição"
 
-#: includes/class-wceo-admin.php:374
+#: includes/class-gepo-admin.php:374
 msgid "Empty = show on all products. With multiple rules, use AND/OR between them."
 msgstr "Vazio = mostrar em todos os produtos. Com várias regras, use AND/OR entre elas."
 
-#: includes/class-wceo-admin.php:378
+#: includes/class-gepo-admin.php:378
 msgid "Join"
 msgstr "Ligação"
 
-#: includes/class-wceo-admin.php:379
+#: includes/class-gepo-admin.php:379
 msgid "Target"
 msgstr "Alvo"
 
-#: includes/class-wceo-admin.php:380
+#: includes/class-gepo-admin.php:380
 msgid "Operator"
 msgstr "Operador"
 
-#: includes/class-wceo-admin.php:381
+#: includes/class-gepo-admin.php:381
 msgid "Value"
 msgstr "Valor"
 
-#: includes/class-wceo-admin.php:404
+#: includes/class-gepo-admin.php:404
 msgid "Add rule"
 msgstr "Adicionar regra"
 
-#: includes/class-wceo-admin.php:407
+#: includes/class-gepo-admin.php:407
 msgid "Remove set"
 msgstr "Remover conjunto"
 
-#: includes/class-wceo-admin.php:435
-#: includes/class-wceo-admin.php:491
+#: includes/class-gepo-admin.php:435
+#: includes/class-gepo-admin.php:491
 msgid "Remove"
 msgstr "Remover"
 
-#: includes/class-wceo-admin.php:477
+#: includes/class-gepo-admin.php:477
 msgid "Product"
 msgstr "Produto"
 
-#: includes/class-wceo-admin.php:478
+#: includes/class-gepo-admin.php:478
 msgid "Category"
 msgstr "Categoria"
 
-#: includes/class-wceo-admin.php:479
+#: includes/class-gepo-admin.php:479
 msgid "Tag"
 msgstr "Etiqueta (tag)"
 
-#: includes/class-wceo-admin.php:484
+#: includes/class-gepo-admin.php:484
 msgid "Equals"
 msgstr "Igual a"
 
-#: includes/class-wceo-admin.php:485
+#: includes/class-gepo-admin.php:485
 msgid "Not equal to"
 msgstr "Diferente de"
 
-#: includes/class-wceo-core.php:74
-#: includes/class-wceo-cart.php:89
-#: includes/class-wceo-cart.php:97
-#: includes/class-wceo-cart.php:104
-#: includes/class-wceo-cart.php:176
-#: includes/class-wceo-cart.php:191
-#: includes/class-wceo-cart.php:294
-#: includes/class-wceo-cart.php:323
+#: includes/class-gepo-core.php:74
+#: includes/class-gepo-cart.php:89
+#: includes/class-gepo-cart.php:97
+#: includes/class-gepo-cart.php:104
+#: includes/class-gepo-cart.php:176
+#: includes/class-gepo-cart.php:191
+#: includes/class-gepo-cart.php:294
+#: includes/class-gepo-cart.php:323
 msgid "Extras"
 msgstr "Extras"
 
-#: includes/class-wceo-frontend.php:108
+#: includes/class-gepo-frontend.php:108
 msgid "Please select at least one option in each required extra (multiple type)."
 msgstr "Escolha pelo menos uma opção em cada extra obrigatório (tipo múltipla)."
 
-#: includes/class-wceo-frontend.php:190
+#: includes/class-gepo-frontend.php:190
 msgid "— Select —"
 msgstr "— Selecionar —"
 
 #. translators: %s: extra set name
-#: includes/class-wceo-cart.php:91
+#: includes/class-gepo-cart.php:91
 msgid "Please select at least one option in \"%s\"."
 msgstr "Escolha pelo menos uma opção em \"%s\"."
 
 #. translators: %s: extra set name
-#: includes/class-wceo-cart.php:99
-#: includes/class-wceo-cart.php:106
+#: includes/class-gepo-cart.php:99
+#: includes/class-gepo-cart.php:106
 msgid "Please select an option in \"%s\"."
 msgstr "Escolha uma opção em \"%s\"."

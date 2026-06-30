@@ -1,42 +1,42 @@
-.wceo-fields-wrap {
+.gepo-fields-wrap {
 	margin-bottom: 1.25em;
 }
 
-.wceo-global-label {
+.gepo-global-label {
 	font-weight: 600;
 	margin-bottom: 0.5em;
 }
 
-.wceo-set {
+.gepo-set {
 	border: 1px solid rgba(0, 0, 0, 0.08);
 	padding: 0.75em 1em 1em;
 	margin: 0 0 1em;
 	border-radius: 4px;
 }
 
-.wceo-set-legend {
+.gepo-set-legend {
 	font-weight: 600;
 	padding: 0 0.35em;
 }
 
-.wceo-options-multiple,
-.wceo-options-radio {
+.gepo-options-multiple,
+.gepo-options-radio {
 	list-style: none !important;
 	margin: 0.5em 0 0;
 	padding: 0;
 }
 
-.wceo-options-multiple li,
-.wceo-options-radio li {
+.gepo-options-multiple li,
+.gepo-options-radio li {
 	margin: 0.35em 0;
 }
 
-.wceo-select {
+.gepo-select {
 	max-width: 100%;
 	margin-top: 0.35em;
 }
 
-.wceo-option-suffix {
+.gepo-option-suffix {
 	font-size: 0.9em;
 	opacity: 0.85;
 }

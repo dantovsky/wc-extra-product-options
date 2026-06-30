@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: Extra Product Options for WooCommerce
+ * Plugin Name: Global Extra Product Options for WooCommerce
  * Description: This plugin adds extra product options to WooCommerce products with pricing and conditional display rules.
- * Version: 1.3.2
+ * Version: 1.4.0
  * Author: Dante Marinho
  * Author URI: https://profiles.wordpress.org/dantiii
- * Text Domain: wc-extra-product-options
+ * Text Domain: global-extra-product-options
  * Domain Path: /languages
  * Requires at least: 6.5
  * Tested up to: 7.0
@@ -26,16 +26,16 @@
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  * GNU General Public License for more details.
  *
- * @package WC_Extra_Product_Options
+ * @package Global_Extra_Product_Options
  * @license GPLv2
  */
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'WCEO_VERSION', '1.3.2' );
-define( 'WCEO_FILE', __FILE__ );
-define( 'WCEO_PATH', plugin_dir_path( __FILE__ ) );
-define( 'WCEO_URL', plugin_dir_url( __FILE__ ) );
+define( 'GEPO_VERSION', '1.4.0' );
+define( 'GEPO_FILE', __FILE__ );
+define( 'GEPO_PATH', plugin_dir_path( __FILE__ ) );
+define( 'GEPO_URL', plugin_dir_url( __FILE__ ) );
 
 /**
  * Bootstrap plugin after all plugins are loaded.
@@ -45,12 +45,12 @@ define( 'WCEO_URL', plugin_dir_url( __FILE__ ) );
  *
  * @return void
  */
-function wceo_bootstrap() {
+function gepo_bootstrap() {
 	if ( ! class_exists( 'WooCommerce' ) ) {
 		add_action(
 			'admin_notices',
 			function () {
-				echo '<div class="notice notice-error"><p>' . esc_html__( 'Extra Product Options requires WooCommerce to be active.', 'wc-extra-product-options' ) . '</p></div>';
+				echo '<div class="notice notice-error"><p>' . esc_html__( 'Global Extra Product Options requires WooCommerce to be active.', 'global-extra-product-options' ) . '</p></div>';
 			}
 		);
 		return;
@@ -67,7 +67,7 @@ function wceo_bootstrap() {
 				echo esc_html(
 					sprintf(
 						/* translators: %s: WooCommerce version */
-						__( 'Extra Product Options was tested with WooCommerce 8.2 or higher (recommended for WordPress 6.9 and WooCommerce 10.6). Your version is %s.', 'wc-extra-product-options' ),
+						__( 'Global Extra Product Options was tested with WooCommerce 8.2 or higher (recommended for WordPress 6.9 and WooCommerce 10.6). Your version is %s.', 'global-extra-product-options' ),
 						WC_VERSION
 					)
 				);
@@ -76,40 +76,40 @@ function wceo_bootstrap() {
 		);
 	}
 
-	require_once WCEO_PATH . 'includes/class-wceo-core.php';
-	require_once WCEO_PATH . 'includes/class-wceo-admin.php';
-	require_once WCEO_PATH . 'includes/class-wceo-frontend.php';
-	require_once WCEO_PATH . 'includes/class-wceo-cart.php';
+	require_once GEPO_PATH . 'includes/class-gepo-core.php';
+	require_once GEPO_PATH . 'includes/class-gepo-admin.php';
+	require_once GEPO_PATH . 'includes/class-gepo-frontend.php';
+	require_once GEPO_PATH . 'includes/class-gepo-cart.php';
 
-	WCEO_Core::init();
+	GEPO_Core::init();
 	if ( is_admin() ) {
-		WCEO_Admin::init();
+		GEPO_Admin::init();
 	}
 	if ( ! is_admin() ) {
-		WCEO_Frontend::init();
-		WCEO_Cart::init();
+		GEPO_Frontend::init();
+		GEPO_Cart::init();
 	}
 }
-add_action( 'plugins_loaded', 'wceo_bootstrap', 11 );
+add_action( 'plugins_loaded', 'gepo_bootstrap', 11 );
 
 /**
  * Add Settings link to plugin action links.
  *
- * Adds a "Settings" link in the plugin listing that redirects to the WCEO settings page.
+ * Adds a "Settings" link in the plugin listing that redirects to the GEPO settings page.
  *
  * @param string[] $links Existing plugin action links.
  * @return string[] Modified links array with Settings link prepended.
  */
-function wceo_plugin_action_links( $links ) {
-	$url = admin_url( 'admin.php?page=wceo-settings' );
+function gepo_plugin_action_links( $links ) {
+	$url = admin_url( 'admin.php?page=gepo-settings' );
 	$links = (array) $links;
 	array_unshift(
 		$links,
-		'<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'wc-extra-product-options' ) . '</a>'
+		'<a href="' . esc_url( $url ) . '">' . esc_html__( 'Settings', 'global-extra-product-options' ) . '</a>'
 	);
 	return $links;
 }
-add_filter( 'plugin_action_links_' . plugin_basename( WCEO_FILE ), 'wceo_plugin_action_links' );
+add_filter( 'plugin_action_links_' . plugin_basename( GEPO_FILE ), 'gepo_plugin_action_links' );
 
 add_action(
 	'before_woocommerce_init',
@@ -117,11 +117,11 @@ add_action(
 		if ( ! class_exists( \Automattic\WooCommerce\Utilities\FeaturesUtil::class ) ) {
 			return;
 		}
-		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', WCEO_FILE, true );
+		\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'custom_order_tables', GEPO_FILE, true );
 
 		// Carrinho/checkout em blocos (desde WooCommerce 7.6; recomendado em 8.3+ e 10.x).
 		if ( defined( 'WC_VERSION' ) && version_compare( WC_VERSION, '7.6', '>=' ) ) {
-			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', WCEO_FILE, true );
+			\Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility( 'cart_checkout_blocks', GEPO_FILE, true );
 		}
 	}
 );

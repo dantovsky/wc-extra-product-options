@@ -1,19 +1,19 @@
-/* global jQuery, wceoFront */
+/* global jQuery, gepoFront */
 (function ($) {
 	'use strict';
 
 	function formatMoney(num) {
-		var d = parseInt(wceoFront.decimals, 10);
+		var d = parseInt(gepoFront.decimals, 10);
 		if (isNaN(d)) {
 			d = 2;
 		}
 		var fixed = num.toFixed(d);
 		var parts = fixed.split('.');
-		var intp = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, wceoFront.thousandSep || '');
-		var decp = parts.length > 1 ? (wceoFront.decimalSep || '.') + parts[1] : '';
+		var intp = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, gepoFront.thousandSep || '');
+		var decp = parts.length > 1 ? (gepoFront.decimalSep || '.') + parts[1] : '';
 		var amount = intp + (parts.length > 1 ? decp : '');
-		var sym = wceoFront.currencySym || '';
-		var pos = wceoFront.currencyPos || 'left';
+		var sym = gepoFront.currencySym || '';
+		var pos = gepoFront.currencyPos || 'left';
 		if (pos === 'right') {
 			return amount + sym;
 		}
@@ -28,7 +28,7 @@
 
 	function getAddonTotal() {
 		var total = 0;
-		$('.wceo-fields-wrap .wceo-input').each(function () {
+		$('.gepo-fields-wrap .gepo-input').each(function () {
 			var $el = $(this);
 			if ($el.is('select')) {
 				var $o = $el.find('option:selected');
@@ -42,7 +42,7 @@
 		return total;
 	}
 
-	var baseSimple = parseFloat(wceoFront.basePrice) || 0;
+	var baseSimple = parseFloat(gepoFront.basePrice) || 0;
 	var variationBase = null;
 
 	function isVariableProduct() {
@@ -106,7 +106,7 @@
 	}
 
 	function updatePrice() {
-		var $wrap = $('.wceo-fields-wrap');
+		var $wrap = $('.gepo-fields-wrap');
 		if (!$wrap.length) {
 			return;
 		}
@@ -123,25 +123,25 @@
 			'<span class="woocommerce-Price-amount amount"><bdi>' +
 			formatMoney(total) +
 			'</bdi></span>' +
-			(wceoFront.priceSuffix || '');
+			(gepoFront.priceSuffix || '');
 		$price.html(html);
 	}
 
 	function validateRequiredMultiple() {
 		var ok = true;
-		$('.wceo-fields-wrap fieldset[data-required="1"]').each(function () {
+		$('.gepo-fields-wrap fieldset[data-required="1"]').each(function () {
 			var $fs = $(this);
-			if ($fs.find('select.wceo-input').length) {
+			if ($fs.find('select.gepo-input').length) {
 				return;
 			}
-			if ($fs.find('input.wceo-input[type="radio"]').length) {
-				if (!$fs.find('input.wceo-input[type="radio"]:checked').length) {
+			if ($fs.find('input.gepo-input[type="radio"]').length) {
+				if (!$fs.find('input.gepo-input[type="radio"]:checked').length) {
 					ok = false;
 					return false;
 				}
 				return;
 			}
-			if (!$fs.find('.wceo-input:checkbox:checked').length) {
+			if (!$fs.find('.gepo-input:checkbox:checked').length) {
 				ok = false;
 				return false;
 			}
@@ -152,7 +152,7 @@
 	document.addEventListener(
 		'click',
 		function (e) {
-			if (!$('.wceo-fields-wrap').length) {
+			if (!$('.gepo-fields-wrap').length) {
 				return;
 			}
 			var el = e.target;
@@ -167,7 +167,7 @@
 				return;
 			}
 			if (!validateRequiredMultiple()) {
-				var msg = wceoFront.strings && wceoFront.strings.requiredMultiple ? wceoFront.strings.requiredMultiple : '';
+				var msg = gepoFront.strings && gepoFront.strings.requiredMultiple ? gepoFront.strings.requiredMultiple : '';
 				if (msg) {
 					window.alert(msg);
 				}
@@ -180,7 +180,7 @@
 	);
 
 	$(function () {
-		$(document).on('change', '.wceo-fields-wrap .wceo-input', updatePrice);
+		$(document).on('change', '.gepo-fields-wrap .gepo-input', updatePrice);
 
 		var $form = $('form.variations_form');
 		if ($form.length) {
